@@ -1,10 +1,15 @@
-from flask import Flask, redirect, render_template, request
+'''This file initiates a web app of emotion detector
+   which is executed via flask on localhost:5000
+'''
+from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector", methods=["GET"])
 def sent_detector():
+    '''Initiates the emotion detector web app
+    '''
     text_to_analyse = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyse)
     anger = response["anger"]
@@ -15,7 +20,7 @@ def sent_detector():
     dominant_emotion = response["dominant emotion"]
     if dominant_emotion is None:
         return "Invalid Input! Try Again!"
-    return ( 
+    return (
     f"anger: {anger}, " 
     f"disgust: {disgust}, " 
     f"fear: {fear}, " 
