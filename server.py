@@ -1,0 +1,30 @@
+from flask import Flask, redirect, render_template, request
+from EmotionDetection.emotion_detection import emotion_detector
+
+app = Flask("Emotion Detector")
+
+@app.route("/emotionDetector", methods=["GET"])
+def sent_detector():
+    text_to_analyse = request.args.get("textToAnalyze")
+    response = emotion_detector(text_to_analyse)
+    anger = response["anger"]
+    disgust = response["disgust"]
+    fear = response["fear"]
+    joy = response["joy"]
+    sadness = response["sadness"]
+    dominant_emotion = response["dominant emotion"]
+    return ( 
+    f"anger: {anger}, " 
+    f"disgust: {disgust}, " 
+    f"fear: {fear}, " 
+    f"joy: {joy}, " 
+    f"sadness: {sadness}, " 
+    f"dominant emotion: {dominant_emotion}" )
+
+@app.route("/", methods=["GET"])
+def render_index_page():
+    """renders the index page"""
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
