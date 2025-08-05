@@ -13,6 +13,8 @@ def sent_detector():
     joy = response["joy"]
     sadness = response["sadness"]
     dominant_emotion = response["dominant emotion"]
+    if dominant_emotion is None:
+        return "Invalid Input! Try Again!"
     return ( 
     f"anger: {anger}, " 
     f"disgust: {disgust}, " 
